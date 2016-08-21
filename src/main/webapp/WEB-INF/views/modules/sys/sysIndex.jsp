@@ -22,7 +22,7 @@
                 contentCss: { 'height': $('#right').height() - tabTitleHeight },
                 tabs: [], loadOnce: true, tabWidth: 110, titleHeight: tabTitleHeight
             });//</c:if>
-			// 绑定菜单单击事件
+			// 绑定最顶部菜单单击事件
 			$("#menu a.menu").click(function(){
 				// 一级菜单焦点
 				$("#menu li.menu").removeClass("active");
@@ -43,7 +43,8 @@
 				}
 				// 显示二级菜单
 				var menuId = "#menu-" + $(this).attr("data-id");
-				if ($(menuId).length > 0){
+				//alert(menuId);
+				if ($(menuId).length > 0){ // TODO $(menuId).length 永远等于0 这个if里面的逻辑暂时不知道用处
 					$("#left .accordion").hide();
 					$(menuId).show();
 					// 初始化点击第一个二级菜单
@@ -58,14 +59,15 @@
 				}else{
 					// 获取二级菜单数据
 					$.get($(this).attr("data-href"), function(data){
+						//alert(JSON.stringify(data));
 						if (data.indexOf("id=\"loginForm\"") != -1){
 							alert('未登录或登录超时。请重新登录，谢谢！');
 							top.location = "${ctx}";
 							return false;
 						}
-						$("#left .accordion").hide();
+						$("#left .accordion").hide();// TODO 这里的div会一直隐藏在这里没有被移除掉
 						$("#left").append(data);
-						// 链接去掉虚框
+						// 链接去掉虚框 
 						$(menuId + " a").bind("focus",function() {
 							if(this.blur) {this.blur()};
 						});
@@ -86,7 +88,8 @@
 						// 展现三级
 						$(menuId + " .accordion-inner a").click(function(){
 							var href = $(this).attr("data-href");
-							if($(href).length > 0){
+							// alert($(href).length);
+							if($(href).length > 0){// 大于0说明下面还有四级菜单
 								$(href).toggle().parent().toggle();
 								return false;
 							}
