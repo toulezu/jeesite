@@ -28,7 +28,7 @@ SELECT * FROM (
 	JOIN sys_user u ON u.id = ur.user_id AND u.id = '2'
 	WHERE a.del_flag = '0' AND r.del_flag = '0' AND u.del_flag = '0'
 	ORDER BY a.sort
-) a WHERE a.is_show = '1' AND a.`parent.id` = '40';
+) a WHERE a.is_show = '1' AND a.`parent.id` = '56' ;
 
 SELECT * FROM sys_menu WHERE `id` = 100;
 SELECT * FROM sys_role_menu rm;
@@ -42,51 +42,8 @@ INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES('1','100');
 SELECT 
 	COUNT(1)
 FROM oa_notify a
-JOIN oa_notify_record r ON r.oa_notify_id = a.id AND r.user_id = '2'
+	JOIN oa_notify_record r ON r.oa_notify_id = a.id AND r.user_id = '2'
 			AND r.read_flag = '0'
 WHERE a.del_flag = '0'
 	AND a.STATUS = '1'
 
--- 获取cms内容管理模块的树形栏目列表
-SELECT 
-	a.id AS "id",
-	a.parent_id AS "parent.id",
-	a.parent_ids AS "parentIds",
-	a.site_id AS "site.id",
-	a.office_id AS "office.id",
-	a.module AS "module",
-	a.name AS "name",
-	a.image AS "image",
-	a.href AS "href",
-	a.target AS "target",
-	a.description AS "description",
-	a.keywords AS "keywords",
-	a.sort AS "sort",
-	a.in_menu AS "inMenu",
-	a.in_list AS "inList",
-	a.show_modes AS "showModes",
-	a.allow_comment AS "allowComment",
-	a.is_audit AS "isAudit",
-	a.custom_list_view AS "customListView",
-	a.custom_content_view AS "customContentView",
-	a.view_config AS "viewConfig",
-	a.create_by AS "createBy.id",
-	a.create_date AS "createDate",
-	a.update_by AS "updateBy.id",
-	a.update_date AS "updateDate",
-	a.remarks AS "remarks",
-	a.del_flag AS "delFlag",
-	c.name AS "parent.name",
-	c.view_config AS "parent.viewConfig",
-	o.name AS "office.name",
-	s.theme AS "site.theme"
-FROM cms_category a
-LEFT JOIN cms_category c ON c.id = a.parent_id
-JOIN sys_office o ON o.id = a.office_id
-JOIN sys_user u ON u.id = a.create_by
-JOIN cms_site s ON a.site_id = s.id
-WHERE
-a.del_flag = '0'
--- AND a.site_id  = #{site.id}
--- AND a.parent_id  = #{parent.id}
-ORDER BY a.site_id,a.sort ASC`jeesite`
