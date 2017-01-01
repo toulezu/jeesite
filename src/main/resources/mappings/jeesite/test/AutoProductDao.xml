@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.test.dao.AutoProductDao">
+    
+	<sql id="autoProductColumns">
+		a.pid AS "pid",
+		a.pname AS "pname",
+		a.pcode AS "pcode",
+		a.pdesc AS "pdesc",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="autoProductJoins">
+	</sql>
+    
+	<select id="get" resultType="AutoProduct">
+		SELECT 
+			<include refid="autoProductColumns"/>
+		FROM auto_product a
+		<include refid="autoProductJoins"/>
+		WHERE a.pid = #{id}
+	</select>
+	
+	<select id="findList" resultType="AutoProduct">
+		SELECT 
+			<include refid="autoProductColumns"/>
+		FROM auto_product a
+		<include refid="autoProductJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="pname != null and pname != ''">
+				AND a.pname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pname},'%')</if>
+			</if>
+			<if test="pcode != null and pcode != ''">
+				AND a.pcode LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pcode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pcode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pcode},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="AutoProduct">
+		SELECT 
+			<include refid="autoProductColumns"/>
+		FROM auto_product a
+		<include refid="autoProductJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO auto_product(
+			pname,
+			pcode,
+			pdesc,
+			remarks,
+			create_by,
+			create_date,
+			del_flag
+		) VALUES (
+			#{pname},
+			#{pcode},
+			#{pdesc},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE auto_product SET 	
+			pname = #{pname},
+			pcode = #{pcode},
+			pdesc = #{pdesc},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE pid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE auto_product SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE pid = #{id}
+	</update>
+	
+</mapper>
