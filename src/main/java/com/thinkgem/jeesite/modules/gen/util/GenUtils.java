@@ -305,6 +305,15 @@ public class GenUtils {
 		model.put("className", StringUtils.uncapitalize(genScheme.getGenTable().getClassName()));
 		model.put("ClassName", StringUtils.capitalize(genScheme.getGenTable().getClassName()));
 		
+		model.put("pk", "id");
+		List<GenTableColumn> columnList = genScheme.getGenTable().getColumnList();
+		for (int i = 0,c = columnList.size(); i < c; i++) {
+			GenTableColumn column = columnList.get(i);
+			if (column.getIsPk().equals("1")) {
+				model.put("pk", column.getName());
+			}
+		}
+		
 		model.put("functionName", genScheme.getFunctionName());
 		model.put("functionNameSimple", genScheme.getFunctionNameSimple());
 		model.put("functionAuthor", StringUtils.isNotBlank(genScheme.getFunctionAuthor())?genScheme.getFunctionAuthor():UserUtils.getUser().getName());

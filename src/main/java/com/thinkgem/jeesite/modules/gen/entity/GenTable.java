@@ -20,6 +20,7 @@ public class GenTable extends DataEntity<GenTable> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name; 	// 名称
+	private String pk; 		// 主键
 	private String comments;		// 描述
 	private String className;		// 实体类名称
 	private String parentTable;		// 关联父表
@@ -45,6 +46,14 @@ public class GenTable extends DataEntity<GenTable> {
 	@Length(min=1, max=200)
 	public String getName() {
 		return StringUtils.lowerCase(name);
+	}
+
+	public String getPk() {
+		return pk;
+	}
+
+	public void setPk(String pk) {
+		this.pk = pk;
 	}
 
 	public void setName(String name) {
