@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.test.service;
+package com.ckjava.auto.basic.service;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.test.entity.AutoProduct;
-import com.thinkgem.jeesite.test.dao.AutoProductDao;
+import com.ckjava.auto.basic.entity.AutoProduct;
+import com.ckjava.auto.basic.dao.AutoProductDao;
 
 /**
  * 产品信息Service
  * @author chen_k
- * @version 2017-01-01
+ * @version 2017-01-02
  */
 @Service
 @Transactional(readOnly = true)

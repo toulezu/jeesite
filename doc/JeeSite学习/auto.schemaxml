@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">jeesite</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="auto_product" view="standard">
+<left>33</left>
+<top>97</top>
+<width>229</width>
+<height>248</height>
+<sql_create_table>CREATE TABLE `auto_product` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `p_name` varchar(200) DEFAULT NULL COMMENT '产品名称',
+  `p_code` varchar(20) DEFAULT NULL COMMENT '产品代码',
+  `p_desc` longtext COMMENT '产品描述',
+  `remarks` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标识',
+  PRIMARY KEY (`pid`),
+  UNIQUE KEY `uni_product_code` (`p_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='产品'</sql_create_table>
+</table>
+<table name="auto_version" view="standard">
+<left>326</left>
+<top>97</top>
+<width>229</width>
+<height>299</height>
+<sql_create_table>CREATE TABLE `auto_version` (
+  `vid` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `v_name` varchar(200) DEFAULT NULL COMMENT '版本名称',
+  `v_code` varchar(20) DEFAULT NULL COMMENT '版本代码',
+  `v_desc` varchar(1000) DEFAULT NULL COMMENT '描述',
+  `begin_date` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_date` datetime DEFAULT NULL COMMENT '结束时间',
+  `pid` int(11) DEFAULT NULL COMMENT '关联产品id',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标记',
+  PRIMARY KEY (`vid`),
+  UNIQUE KEY `uni_version_code` (`v_code`),
+  KEY `FK_auto_version_pid` (`pid`),
+  CONSTRAINT `FK_auto_version_pid` FOREIGN KEY (`pid`) REFERENCES `auto_product` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='版本信息'</sql_create_table>
+</table>
+<table name="auto_area" view="standard">
+<left>621</left>
+<top>97</top>
+<width>235</width>
+<height>257</height>
+<sql_create_table>CREATE TABLE `auto_area` (
+  `aid` int(18) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `area_name` varchar(255) DEFAULT NULL COMMENT '区域名称',
+  `area_code` varchar(50) DEFAULT NULL COMMENT '区域代码',
+  `area_desc` longtext COMMENT '区域描述',
+  `remarks` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标识',
+  PRIMARY KEY (`aid`),
+  UNIQUE KEY `uni_area_code` (`area_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='区域'</sql_create_table>
+</table>
+<table name="auto_province" view="standard">
+<left>901</left>
+<top>98</top>
+<width>229</width>
+<height>248</height>
+<sql_create_table>CREATE TABLE `auto_province` (
+  `pid` int(18) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `p_name` varchar(255) DEFAULT NULL COMMENT '省份',
+  `p_code` varchar(20) DEFAULT NULL COMMENT '省份代码',
+  `p_desc` longtext COMMENT '省份描述',
+  `aid` int(18) DEFAULT NULL COMMENT '所属区域',
+  `remarks` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标识',
+  PRIMARY KEY (`pid`),
+  UNIQUE KEY `uni_province_code` (`p_code`),
+  KEY `FK_auto_province_aid` (`aid`),
+  CONSTRAINT `FK_auto_province_aid` FOREIGN KEY (`aid`) REFERENCES `auto_area` (`aid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='省份'</sql_create_table>
+</table>
+<table name="auto_saledata_raw" view="standard">
+<left>351</left>
+<top>467</top>
+<width>395</width>
+<height>390</height>
+<sql_create_table>CREATE TABLE `auto_saledata_raw` (
+  `id` int(18) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `sale_date` varchar(20) DEFAULT NULL COMMENT '销售账期',
+  `sale_person` varchar(50) DEFAULT NULL COMMENT '销售人',
+  `sale_person_code` varchar(20) DEFAULT NULL COMMENT '销售人代码',
+  `org_name` varchar(255) DEFAULT NULL COMMENT '所属机构',
+  `org_code` varchar(20) DEFAULT NULL COMMENT '机构代码',
+  `amount` decimal(10,0) DEFAULT NULL COMMENT '金额',
+  `product_code` varchar(20) DEFAULT NULL COMMENT '产品代码',
+  `version_code` varchar(20) DEFAULT NULL COMMENT '版本代码',
+  `area_code` varchar(20) DEFAULT NULL COMMENT '区域代码',
+  `province_code` varchar(20) DEFAULT NULL COMMENT '省份代码',
+  `remarks` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) DEFAULT NULL COMMENT '删除标识',
+  PRIMARY KEY (`id`),
+  KEY `FK_auto_saledata_raw_product` (`product_code`),
+  KEY `FK_auto_saledata_raw_area` (`area_code`),
+  KEY `FK_auto_saledata_raw_province` (`province_code`),
+  KEY `FK_auto_saledata_raw_version` (`version_code`),
+  CONSTRAINT `FK_auto_saledata_raw_version` FOREIGN KEY (`version_code`) REFERENCES `auto_version` (`v_code`),
+  CONSTRAINT `FK_auto_saledata_raw_area` FOREIGN KEY (`area_code`) REFERENCES `auto_area` (`area_code`),
+  CONSTRAINT `FK_auto_saledata_raw_product` FOREIGN KEY (`product_code`) REFERENCES `auto_product` (`p_code`),
+  CONSTRAINT `FK_auto_saledata_raw_province` FOREIGN KEY (`province_code`) REFERENCES `auto_province` (`p_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='销售数据'</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

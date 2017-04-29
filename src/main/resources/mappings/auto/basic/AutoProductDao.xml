@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.test.dao.AutoProductDao">
+<mapper namespace="com.ckjava.auto.basic.dao.AutoProductDao">
     
 	<sql id="autoProductColumns">
 		a.pid AS "pid",
-		a.pname AS "pname",
-		a.pcode AS "pcode",
-		a.pdesc AS "pdesc",
+		a.p_name AS "pName",
+		a.p_code AS "pCode",
+		a.p_desc AS "pDesc",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -33,17 +33,23 @@
 		<include refid="autoProductJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="pname != null and pname != ''">
-				AND a.pname LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pname}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pname}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pname},'%')</if>
+			<if test="pName != null and pName != ''">
+				AND a.p_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pName},'%')</if>
 			</if>
-			<if test="pcode != null and pcode != ''">
-				AND a.pcode LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pcode}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pcode}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pcode},'%')</if>
+			<if test="pCode != null and pCode != ''">
+				AND a.p_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pCode},'%')</if>
+			</if>
+			<if test="pDesc != null and pDesc != ''">
+				AND a.p_desc LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pDesc}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pDesc}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pDesc},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -76,17 +82,17 @@
 	
 	<insert id="insert">
 		INSERT INTO auto_product(
-			pname,
-			pcode,
-			pdesc,
+			p_name,
+			p_code,
+			p_desc,
 			remarks,
 			create_by,
 			create_date,
 			del_flag
 		) VALUES (
-			#{pname},
-			#{pcode},
-			#{pdesc},
+			#{pName},
+			#{pCode},
+			#{pDesc},
 			#{remarks},
 			#{createBy.id},
 			#{createDate},
@@ -96,12 +102,11 @@
 	
 	<update id="update">
 		UPDATE auto_product SET 	
-			pname = #{pname},
-			pcode = #{pcode},
-			pdesc = #{pdesc},
+			p_name = #{pName},
+			p_code = #{pCode},
+			p_desc = #{pDesc},
 			remarks = #{remarks},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate}
+			del_flag = #{delFlag}
 		WHERE pid = #{id}
 	</update>
 	

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ckjava.auto.basic.dao.AutoVersionDao">
+    
+	<sql id="autoVersionColumns">
+		a.vid AS "vid",
+		a.v_name AS "vName",
+		a.v_code AS "vCode",
+		a.v_desc AS "vDesc",
+		a.begin_date AS "beginDate",
+		a.end_date AS "endDate",
+		a.pid AS "pid",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="autoVersionJoins">
+		LEFT JOIN auto_product b ON b.pid = a.pid
+	</sql>
+    
+	<select id="get" resultType="AutoVersion">
+		SELECT 
+			<include refid="autoVersionColumns"/>
+		FROM auto_version a
+		<include refid="autoVersionJoins"/>
+		WHERE a.vid = #{id}
+	</select>
+	
+	<select id="findList" resultType="AutoVersion">
+		SELECT 
+			<include refid="autoVersionColumns"/>
+		FROM auto_version a
+		<include refid="autoVersionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="vName != null and vName != ''">
+				AND a.v_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{vName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{vName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{vName},'%')</if>
+			</if>
+			<if test="vCode != null and vCode != ''">
+				AND a.v_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{vCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{vCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{vCode},'%')</if>
+			</if>
+			<if test="beginDate != null and beginDate != ''">
+				AND a.begin_date = #{beginDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND a.end_date = #{endDate}
+			</if>
+			<if test="pid != null and pid != ''">
+				AND a.pid = #{pid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="AutoVersion">
+		SELECT 
+			<include refid="autoVersionColumns"/>
+		FROM auto_version a
+		<include refid="autoVersionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO auto_version(
+			v_name,
+			v_code,
+			v_desc,
+			begin_date,
+			end_date,
+			pid,
+			create_by,
+			create_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{vName},
+			#{vCode},
+			#{vDesc},
+			#{beginDate},
+			#{endDate},
+			#{pid},
+			#{createBy.id},
+			#{createDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE auto_version SET 	
+			v_name = #{vName},
+			v_code = #{vCode},
+			v_desc = #{vDesc},
+			begin_date = #{beginDate},
+			end_date = #{endDate},
+			pid = #{pid},
+			remarks = #{remarks},
+			del_flag = #{delFlag}
+		WHERE vid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE auto_version SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE vid = #{id}
+			</when>
+			<otherwise>
+				WHERE pid = #{pid}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

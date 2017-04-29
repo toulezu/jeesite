@@ -608,6 +608,12 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/UserAgentUtils-1.13.jar</systemPath>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.ctrip.legends</groupId>
+			<artifactId>legends-client</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		
 		<!-- 自定义jar依赖包
 		<dependency>
 			<groupId>com.thinkgem.jeesite</groupId>
