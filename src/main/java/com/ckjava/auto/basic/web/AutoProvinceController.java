@@ -25,7 +25,7 @@ import com.ckjava.auto.basic.service.AutoProvinceService;
 /**
  * 省份管理Controller
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/basic/autoProvince")

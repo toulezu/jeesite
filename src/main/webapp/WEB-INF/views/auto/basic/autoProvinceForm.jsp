@@ -28,7 +28,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/basic/autoProvince/">省份列表</a></li>
-		<li class="active"><a href="${ctx}/basic/autoProvince/form?id=${autoProvince.pid}">省份<shiro:hasPermission name="basic:autoProvince:edit">${not empty autoProvince.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoProvince:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/basic/autoProvince/form?id=${autoProvince.id}">省份<shiro:hasPermission name="basic:autoProvince:edit">${not empty autoProvince.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoProvince:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="autoProvince" action="${ctx}/basic/autoProvince/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,28 +36,26 @@
 		<div class="control-group">
 			<label class="control-label">省份：</label>
 			<div class="controls">
-				<form:input path="pName" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="provinceName" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">省份代码：</label>
 			<div class="controls">
-				<form:input path="pCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="provinceCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">省份描述：</label>
 			<div class="controls">
-				<form:input path="pDesc" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="provinceDesc" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">所属区域：</label>
 			<div class="controls">
-				<form:select path="aid" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
+				<sys:treeselect id="area" name="area.id" value="${autoProvince.area.id}" labelName="area.name" labelValue="${autoProvince.area.name}"
+					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

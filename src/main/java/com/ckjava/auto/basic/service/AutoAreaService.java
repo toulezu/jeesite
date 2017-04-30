@@ -16,7 +16,7 @@ import com.ckjava.auto.basic.dao.AutoAreaDao;
 /**
  * 区域管理Service
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @Service
 @Transactional(readOnly = true)

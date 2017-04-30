@@ -28,7 +28,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/basic/autoArea/">区域列表</a></li>
-		<li class="active"><a href="${ctx}/basic/autoArea/form?id=${autoArea.aid}">区域<shiro:hasPermission name="basic:autoArea:edit">${not empty autoArea.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoArea:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/basic/autoArea/form?id=${autoArea.id}">区域<shiro:hasPermission name="basic:autoArea:edit">${not empty autoArea.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoArea:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="autoArea" action="${ctx}/basic/autoArea/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

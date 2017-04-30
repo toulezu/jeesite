@@ -4,22 +4,22 @@
 package com.ckjava.auto.basic.entity;
 
 import org.hibernate.validator.constraints.Length;
+import com.thinkgem.jeesite.modules.sys.entity.Area;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 区域管理Entity
+ * 省份管理Entity
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 public class AutoProvince extends DataEntity<AutoProvince> {
 	
 	private static final long serialVersionUID = 1L;
-	private String pid;		// 流水号
-	private String pName;		// 省份
-	private String pCode;		// 省份代码
-	private String pDesc;		// 省份描述
-	private AutoArea aid;		// 所属区域 父类
+	private String provinceName;		// 省份
+	private String provinceCode;		// 省份代码
+	private String provinceDesc;		// 省份描述
+	private Area area;		// 所属区域
 	
 	public AutoProvince() {
 		super();
@@ -29,52 +29,38 @@ public class AutoProvince extends DataEntity<AutoProvince> {
 		super(id);
 	}
 
-	public AutoProvince(AutoArea aid){
-		this.aid = aid;
-	}
-
-	@Length(min=1, max=18, message="流水号长度必须介于 1 和 18 之间")
-	public String getPid() {
-		return pid;
-	}
-
-	public void setPid(String pid) {
-		this.pid = pid;
-	}
-	
 	@Length(min=0, max=255, message="省份长度必须介于 0 和 255 之间")
-	public String getPName() {
-		return pName;
+	public String getProvinceName() {
+		return provinceName;
 	}
 
-	public void setPName(String pName) {
-		this.pName = pName;
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
 	}
 	
 	@Length(min=0, max=20, message="省份代码长度必须介于 0 和 20 之间")
-	public String getPCode() {
-		return pCode;
+	public String getProvinceCode() {
+		return provinceCode;
 	}
 
-	public void setPCode(String pCode) {
-		this.pCode = pCode;
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
 	}
 	
-	public String getPDesc() {
-		return pDesc;
+	public String getProvinceDesc() {
+		return provinceDesc;
 	}
 
-	public void setPDesc(String pDesc) {
-		this.pDesc = pDesc;
+	public void setProvinceDesc(String provinceDesc) {
+		this.provinceDesc = provinceDesc;
 	}
 	
-	@Length(min=0, max=18, message="所属区域长度必须介于 0 和 18 之间")
-	public AutoArea getAid() {
-		return aid;
+	public Area getArea() {
+		return area;
 	}
 
-	public void setAid(AutoArea aid) {
-		this.aid = aid;
+	public void setArea(Area area) {
+		this.area = area;
 	}
 	
 }

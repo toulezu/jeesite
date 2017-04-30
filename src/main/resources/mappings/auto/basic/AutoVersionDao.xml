@@ -3,13 +3,13 @@
 <mapper namespace="com.ckjava.auto.basic.dao.AutoVersionDao">
     
 	<sql id="autoVersionColumns">
-		a.vid AS "vid",
-		a.v_name AS "vName",
-		a.v_code AS "vCode",
-		a.v_desc AS "vDesc",
+		a.id AS "id",
+		a.version_name AS "versionName",
+		a.version_code AS "versionCode",
+		a.version_desc AS "versionDesc",
 		a.begin_date AS "beginDate",
 		a.end_date AS "endDate",
-		a.pid AS "pid",
+		a.product_id AS "productId",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -19,7 +19,6 @@
 	</sql>
 	
 	<sql id="autoVersionJoins">
-		LEFT JOIN auto_product b ON b.pid = a.pid
 	</sql>
     
 	<select id="get" resultType="AutoVersion">
@@ -27,7 +26,7 @@
 			<include refid="autoVersionColumns"/>
 		FROM auto_version a
 		<include refid="autoVersionJoins"/>
-		WHERE a.vid = #{id}
+		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="AutoVersion">
@@ -37,26 +36,17 @@
 		<include refid="autoVersionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="vName != null and vName != ''">
-				AND a.v_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{vName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{vName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{vName},'%')</if>
+			<if test="versionName != null and versionName != ''">
+				AND a.version_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{versionName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{versionName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{versionName},'%')</if>
 			</if>
-			<if test="vCode != null and vCode != ''">
-				AND a.v_code LIKE 
-					<if test="dbName == 'oracle'">'%'||#{vCode}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{vCode}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{vCode},'%')</if>
-			</if>
-			<if test="beginDate != null and beginDate != ''">
-				AND a.begin_date = #{beginDate}
-			</if>
-			<if test="endDate != null and endDate != ''">
-				AND a.end_date = #{endDate}
-			</if>
-			<if test="pid != null and pid != ''">
-				AND a.pid = #{pid}
+			<if test="versionDesc != null and versionDesc != ''">
+				AND a.version_desc LIKE 
+					<if test="dbName == 'oracle'">'%'||#{versionDesc}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{versionDesc}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{versionDesc},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -64,7 +54,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.create_date ASC
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -82,30 +72,30 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.create_date ASC
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
 	
 	<insert id="insert">
 		INSERT INTO auto_version(
-			v_name,
-			v_code,
-			v_desc,
+			version_name,
+			version_code,
+			version_desc,
 			begin_date,
 			end_date,
-			pid,
+			product_id,
 			create_by,
 			create_date,
 			remarks,
 			del_flag
 		) VALUES (
-			#{vName},
-			#{vCode},
-			#{vDesc},
+			#{versionName},
+			#{versionCode},
+			#{versionDesc},
 			#{beginDate},
 			#{endDate},
-			#{pid},
+			#{productId},
 			#{createBy.id},
 			#{createDate},
 			#{remarks},
@@ -115,28 +105,22 @@
 	
 	<update id="update">
 		UPDATE auto_version SET 	
-			v_name = #{vName},
-			v_code = #{vCode},
-			v_desc = #{vDesc},
+			version_name = #{versionName},
+			version_code = #{versionCode},
+			version_desc = #{versionDesc},
 			begin_date = #{beginDate},
 			end_date = #{endDate},
-			pid = #{pid},
-			remarks = #{remarks},
-			del_flag = #{delFlag}
-		WHERE vid = #{id}
+			product_id = #{productId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		UPDATE auto_version SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		<choose>
-			<when test="id !=null and id != ''">
-				WHERE vid = #{id}
-			</when>
-			<otherwise>
-				WHERE pid = #{pid}
-			</otherwise>
-		</choose>
+		WHERE id = #{id}
 	</update>
 	
 </mapper>

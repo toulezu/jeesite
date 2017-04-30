@@ -8,9 +8,9 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.ckjava.auto.basic.entity.AutoVersion;
 
 /**
- * 产品信息DAO接口
+ * 版本管理DAO接口
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @MyBatisDao
 public interface AutoVersionDao extends CrudDao<AutoVersion> {

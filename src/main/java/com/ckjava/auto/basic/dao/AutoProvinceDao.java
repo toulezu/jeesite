@@ -8,9 +8,9 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.ckjava.auto.basic.entity.AutoProvince;
 
 /**
- * 区域管理DAO接口
+ * 省份管理DAO接口
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @MyBatisDao
 public interface AutoProvinceDao extends CrudDao<AutoProvince> {

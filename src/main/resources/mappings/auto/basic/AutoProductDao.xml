@@ -3,10 +3,10 @@
 <mapper namespace="com.ckjava.auto.basic.dao.AutoProductDao">
     
 	<sql id="autoProductColumns">
-		a.pid AS "pid",
-		a.p_name AS "pName",
-		a.p_code AS "pCode",
-		a.p_desc AS "pDesc",
+		a.id AS "id",
+		a.product_name AS "productName",
+		a.product_code AS "productCode",
+		a.product_desc AS "productDesc",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -23,7 +23,7 @@
 			<include refid="autoProductColumns"/>
 		FROM auto_product a
 		<include refid="autoProductJoins"/>
-		WHERE a.pid = #{id}
+		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="AutoProduct">
@@ -33,23 +33,17 @@
 		<include refid="autoProductJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="pName != null and pName != ''">
-				AND a.p_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pName},'%')</if>
+			<if test="productName != null and productName != ''">
+				AND a.product_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{productName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{productName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{productName},'%')</if>
 			</if>
-			<if test="pCode != null and pCode != ''">
-				AND a.p_code LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pCode}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pCode}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pCode},'%')</if>
-			</if>
-			<if test="pDesc != null and pDesc != ''">
-				AND a.p_desc LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pDesc}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pDesc}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pDesc},'%')</if>
+			<if test="productDesc != null and productDesc != ''">
+				AND a.product_desc LIKE 
+					<if test="dbName == 'oracle'">'%'||#{productDesc}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{productDesc}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{productDesc},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -82,17 +76,17 @@
 	
 	<insert id="insert">
 		INSERT INTO auto_product(
-			p_name,
-			p_code,
-			p_desc,
+			product_name,
+			product_code,
+			product_desc,
 			remarks,
 			create_by,
 			create_date,
 			del_flag
 		) VALUES (
-			#{pName},
-			#{pCode},
-			#{pDesc},
+			#{productName},
+			#{productCode},
+			#{productDesc},
 			#{remarks},
 			#{createBy.id},
 			#{createDate},
@@ -102,18 +96,19 @@
 	
 	<update id="update">
 		UPDATE auto_product SET 	
-			p_name = #{pName},
-			p_code = #{pCode},
-			p_desc = #{pDesc},
+			product_name = #{productName},
+			product_code = #{productCode},
+			product_desc = #{productDesc},
 			remarks = #{remarks},
-			del_flag = #{delFlag}
-		WHERE pid = #{id}
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		UPDATE auto_product SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE pid = #{id}
+		WHERE id = #{id}
 	</update>
 	
 </mapper>

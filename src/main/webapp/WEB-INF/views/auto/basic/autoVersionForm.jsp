@@ -28,7 +28,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/basic/autoVersion/">版本列表</a></li>
-		<li class="active"><a href="${ctx}/basic/autoVersion/form?id=${autoVersion.vid}">版本<shiro:hasPermission name="basic:autoVersion:edit">${not empty autoVersion.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoVersion:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/basic/autoVersion/form?id=${autoVersion.id}">版本<shiro:hasPermission name="basic:autoVersion:edit">${not empty autoVersion.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoVersion:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="autoVersion" action="${ctx}/basic/autoVersion/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,19 +36,19 @@
 		<div class="control-group">
 			<label class="control-label">版本名称：</label>
 			<div class="controls">
-				<form:input path="vName" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="versionName" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">版本代码：</label>
 			<div class="controls">
-				<form:input path="vCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="versionCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">描述：</label>
 			<div class="controls">
-				<form:input path="vDesc" htmlEscape="false" maxlength="1000" class="input-xlarge "/>
+				<form:input path="versionDesc" htmlEscape="false" maxlength="1000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -70,10 +70,7 @@
 		<div class="control-group">
 			<label class="control-label">关联产品id：</label>
 			<div class="controls">
-				<form:select path="pid" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
+				<form:input path="productId" htmlEscape="false" maxlength="11" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

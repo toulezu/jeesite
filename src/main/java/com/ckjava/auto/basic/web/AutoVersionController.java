@@ -25,7 +25,7 @@ import com.ckjava.auto.basic.service.AutoVersionService;
 /**
  * 版本管理Controller
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/basic/autoVersion")

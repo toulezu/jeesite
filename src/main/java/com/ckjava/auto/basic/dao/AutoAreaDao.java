@@ -10,7 +10,7 @@ import com.ckjava.auto.basic.entity.AutoArea;
 /**
  * 区域管理DAO接口
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @MyBatisDao
 public interface AutoAreaDao extends CrudDao<AutoArea> {

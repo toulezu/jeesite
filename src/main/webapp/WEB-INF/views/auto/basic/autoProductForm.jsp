@@ -28,7 +28,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/basic/autoProduct/">产品列表</a></li>
-		<li class="active"><a href="${ctx}/basic/autoProduct/form?id=${autoProduct.pid}">产品<shiro:hasPermission name="basic:autoProduct:edit">${not empty autoProduct.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoProduct:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/basic/autoProduct/form?id=${autoProduct.id}">产品<shiro:hasPermission name="basic:autoProduct:edit">${not empty autoProduct.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="basic:autoProduct:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="autoProduct" action="${ctx}/basic/autoProduct/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,19 +36,19 @@
 		<div class="control-group">
 			<label class="control-label">产品名称：</label>
 			<div class="controls">
-				<form:input path="pName" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="productName" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">产品代码：</label>
 			<div class="controls">
-				<form:input path="pCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="productCode" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">产品描述：</label>
 			<div class="controls">
-				<form:input path="pDesc" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="productDesc" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

@@ -16,7 +16,7 @@ import com.ckjava.auto.basic.dao.AutoProductDao;
 /**
  * 产品信息Service
  * @author chen_k
- * @version 2017-01-02
+ * @version 2017-04-30
  */
 @Service
 @Transactional(readOnly = true)
